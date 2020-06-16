@@ -4,7 +4,7 @@ class BookmarksController < ApplicationController
   # GET /bookmarks
   # GET /bookmarks.json
   def index
-    @bookmarks = Bookmark.all
+    @bookmarks = params[:order] ? Bookmark.order(id: params[:order]).all : Bookmark.all
   end
 
   # GET /bookmarks/1
@@ -24,6 +24,11 @@ class BookmarksController < ApplicationController
   # POST /bookmarks
   # POST /bookmarks.json
   def create
+    # if /^https?:\/\// !~ params[:bookmark][:url]
+    #   render html: "ダメ"
+    #   return
+    # end
+
     @bookmark = Bookmark.new(bookmark_params)
 
     respond_to do |format|
